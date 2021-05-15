@@ -1,16 +1,17 @@
 {
-  "name": "@pyrotechniac/star-utils-linux-x64-gnu",
-  "os": [
-    "linux"
-  ],
-  "cpu": [
-    "x64"
-  ],
-  "main": "star-utils.linux-x64-gnu.node",
-  "files": [
-    "star-utils.linux-x64-gnu.node"
-  ],
-  "engines": {
-    "node": ">= 10"
-  }
+	"name": "@pyrotechniac/star-utils-linux-x64-gnu",
+	"os": [
+		"linux"
+	],
+	"cpu": [
+		"x64"
+	],
+	"main": "star-utils.linux-x64-gnu.node",
+	"files": [
+		"star-utils.linux-x64-gnu.node"
+	],
+	"engines": {
+		"node": ">= 10"
+	},
+	"version": "0.1.0"
 }

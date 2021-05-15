@@ -1,16 +1,17 @@
 {
-  "name": "@pyrotechniac/star-utils-darwin-x64",
-  "os": [
-    "darwin"
-  ],
-  "cpu": [
-    "x64"
-  ],
-  "main": "star-utils.darwin-x64.node",
-  "files": [
-    "star-utils.darwin-x64.node"
-  ],
-  "engines": {
-    "node": ">= 10"
-  }
+	"name": "@pyrotechniac/star-utils-darwin-x64",
+	"os": [
+		"darwin"
+	],
+	"cpu": [
+		"x64"
+	],
+	"main": "star-utils.darwin-x64.node",
+	"files": [
+		"star-utils.darwin-x64.node"
+	],
+	"engines": {
+		"node": ">= 10"
+	},
+	"version": "0.1.0"
 }
