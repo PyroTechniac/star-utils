@@ -4,6 +4,7 @@
 		"name": "star-utils",
 		"triples": {}
 	},
+	"version": "0.1.0",
 	"dependencies": {
 		"@node-rs/helper": "^1.0.0"
 	},
