@@ -1,5 +1,5 @@
 {
-  "name": "star-utils-linux-x64-gnu",
+  "name": "@pyrotechniac/star-utils-linux-x64-gnu",
   "os": [
     "linux"
   ],
