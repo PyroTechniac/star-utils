@@ -1,35 +1,35 @@
 {
-  "name": "@pyrotechniac/star-utils",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
-  "napi": {
-    "name": "star-utils",
-    "triples": {}
-  },
-  "version": "0.1.0",
-  "dependencies": {
-    "@napi-rs/cli": "^1.0.4",
-    "@node-rs/helper": "^1.0.0"
-  },
-  "devDependencies": {
-    "benchmark": "^2.1.4"
-  },
-  "engines": {
-    "node": ">= 10"
-  },
-  "scripts": {
-    "artifacts": "napi artifacts",
-    "build": "napi build --platform --release",
-    "build:debug": "napi build --platform",
-    "prepublishOnly": "napi prepublish -t npm",
-    "version": "napi version",
-    "test": "node ./test/",
-    "install": "napi build --platform --release",
-    "bench": "node ./benchmark"
-  },
-  "optionalDependencies": {
-    "@pyrotechniac/star-utils-win32-x64-msvc": "^0.1.0",
-    "@pyrotechniac/star-utils-darwin-x64": "^0.1.0",
-    "@pyrotechniac/star-utils-linux-x64-gnu": "^0.1.0"
-  }
+	"name": "@pyrotechniac/star-utils",
+	"main": "./index.js",
+	"typings": "./index.d.ts",
+	"napi": {
+		"name": "star-utils",
+		"triples": {}
+	},
+	"version": "0.1.0",
+	"dependencies": {
+		"@napi-rs/cli": "^1.0.4",
+		"@node-rs/helper": "^1.0.0"
+	},
+	"devDependencies": {
+		"benchmark": "^2.1.4"
+	},
+	"engines": {
+		"node": ">= 10"
+	},
+	"scripts": {
+		"artifacts": "napi artifacts",
+		"build": "napi build --platform --release",
+		"build:debug": "napi build --platform",
+		"prepublishOnly": "napi prepublish -t npm",
+		"version": "napi version",
+		"test": "node ./test/",
+		"install": "napi build --platform --release",
+		"bench": "node ./benchmark"
+	},
+	"optionalDependencies": {
+		"@pyrotechniac/star-utils-win32-x64-msvc": "^0.1.0",
+		"@pyrotechniac/star-utils-darwin-x64": "^0.1.0",
+		"@pyrotechniac/star-utils-linux-x64-gnu": "^0.1.0"
+	}
 }
