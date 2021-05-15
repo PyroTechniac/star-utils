@@ -9,7 +9,3 @@ macro_rules! node_error {
         }
     };
 }
-
-pub trait TaskRunner: Task {
-    fn run(ctx: CallContext) -> Result<JsObject>;
-}

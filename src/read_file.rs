@@ -10,3 +10,7 @@ pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
     let buffer = ctx.env.create_buffer_with_data(bytes)?.into_raw();
     Ok(buffer)
 }
+
+pub struct FileReader {
+    filepath: Ref<JsString>,
+}
