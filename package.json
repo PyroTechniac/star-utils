@@ -26,10 +26,5 @@
 		"test": "node ./test/",
 		"install": "napi build --platform --release",
 		"bench": "node ./benchmark"
-	},
-	"optionalDependencies": {
-		"@pyrotechniac/star-utils-win32-x64-msvc": "^0.1.0",
-		"@pyrotechniac/star-utils-darwin-x64": "^0.1.0",
-		"@pyrotechniac/star-utils-linux-x64-gnu": "^0.1.0"
 	}
 }
