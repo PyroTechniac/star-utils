@@ -1,5 +1,3 @@
-use napi::{CallContext, JsObject, Result, Task};
-
 #[macro_export]
 macro_rules! node_error {
     ($res:expr) => {

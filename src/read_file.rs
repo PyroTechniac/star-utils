@@ -1,4 +1,4 @@
-use super::{node_error};
+use super::node_error;
 use napi::*;
 use std::fs::read;
 
@@ -11,6 +11,7 @@ pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
     Ok(buffer)
 }
 
+#[derive(Debug)]
 pub struct FileReader {
-    filepath: Ref<JsString>,
+    filepath: String
 }
