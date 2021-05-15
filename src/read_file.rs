@@ -28,10 +28,8 @@ pub struct FileReader {
 impl FileReader {
     fn new(path: JsString) -> Result<Self> {
         let utf8_string = path.into_utf8()?;
-        let utf8_owned = utf8_string.into_owned()?;
-        Ok(Self {
-            filepath: utf8_owned,
-        })
+        let filepath = utf8_string.into_owned()?;
+        Ok(Self { filepath })
     }
 }
 

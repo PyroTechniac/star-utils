@@ -1,15 +1,18 @@
 {
 	"name": "@pyrotechniac/star-utils",
+	"main": "./index.js",
+	"typings": "./index.d.ts",
 	"napi": {
 		"name": "star-utils",
 		"triples": {}
 	},
 	"version": "0.1.0",
 	"dependencies": {
+		"@napi-rs/cli": "^1.0.4",
 		"@node-rs/helper": "^1.0.0"
 	},
 	"devDependencies": {
-		"@napi-rs/cli": "^1.0.0"
+		"benchmark": "^2.1.4"
 	},
 	"engines": {
 		"node": ">= 10"
@@ -20,6 +23,8 @@
 		"build:debug": "napi build --platform",
 		"prepublishOnly": "napi prepublish -t npm",
 		"version": "napi version",
-		"test": "node ./test/"
+		"test": "node ./test/",
+		"install": "napi build --platform --release",
+		"bench": "node ./benchmark"
 	}
 }
