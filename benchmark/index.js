@@ -1,6 +1,7 @@
 const { Suite } = require('benchmark');
-const { readFile: rustReadFile, readFileSync } = require('../');
+const { readFile: rustReadFile, readFileSync: rustReadFileSync } = require('../');
 const { readFile: nodeReadFile } = require('fs/promises');
+const { readFileSync: nodeReadFileSync } = require('fs');
 const { join } = require('path');
 
 const filePath = join(__dirname, 'file.txt');
@@ -16,8 +17,11 @@ const suite = new Suite()
     .add('Node read file', async () => {
         await validate(await nodeReadFile(filePath));
     })
+    .add('Node read file sync', async () => {
+        await validate(nodeReadFileSync(filePath));
+    })
     .add('Rust read file sync', async () => {
-        await validate(readFileSync(filePath));
+        await validate(rustReadFileSync(filePath));
     })
     .add('Rust read file', async () => {
         await validate(await rustReadFile(filePath));
