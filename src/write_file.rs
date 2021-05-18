@@ -1,12 +1,12 @@
-use super::node_error;
+use super::{get_str_from_js, node_error};
 use napi::*;
 use std::fs::write;
 
 #[js_function(2)]
 pub fn write_file_sync(ctx: CallContext) -> Result<JsUndefined> {
-    let filepath = ctx.get::<JsString>(0)?.into_utf8()?;
+    let filepath = get_str_from_js(ctx.get(0)?)?;
     let buffer = ctx.get::<JsBuffer>(1)?.into_value()?;
-    let err = write(filepath.as_str()?, buffer).map_err(|err| err.to_string());
+    let err = write(filepath, buffer).map_err(|err| err.to_string());
     node_error!(err);
     Ok(ctx.env.get_undefined()?)
 }
@@ -29,8 +29,7 @@ pub struct FileWriter {
 
 impl FileWriter {
     fn new(path: JsString, raw: JsBuffer) -> Result<Self> {
-        let utf8_path = path.into_utf8()?;
-        let filepath = utf8_path.into_owned()?;
+        let filepath = get_str_from_js(path)?;
         let data = raw.into_value()?.to_vec();
         Ok(Self { filepath, data })
     }
@@ -41,7 +40,12 @@ impl Task for FileWriter {
     type JsValue = JsUndefined;
 
     fn compute(&mut self) -> Result<Self::Output> {
-        write(&self.filepath, &self.data).map_err(|err| Error::from_reason(err.to_string()))
+        write(&self.filepath, &self.data).map_err(|err| {
+            Error::new(
+                Status::GenericFailure,
+                format!("failed to write file, {}", err),
+            )
+        })
     }
 
     fn resolve(self, env: Env, _: Self::Output) -> Result<Self::JsValue> {

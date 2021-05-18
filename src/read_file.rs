@@ -1,11 +1,16 @@
-use super::node_error;
+use super::{get_str_from_js, node_error};
 use napi::*;
 use std::fs::read;
 
 #[js_function(1)]
 pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
-    let filepath = ctx.get::<JsString>(0)?.into_utf8()?;
-    let file = read(filepath.as_str()?).map_err(|err| err.to_string());
+    let filepath = get_str_from_js(ctx.get(0)?)?;
+    let file = read(filepath).map_err(|err| {
+        Error::new(
+            Status::GenericFailure,
+            format!("failed to read file, {}", err),
+        )
+    });
     let bytes = node_error!(file);
     let buffer = ctx.env.create_buffer_with_data(bytes)?.into_raw();
     Ok(buffer)
@@ -27,8 +32,7 @@ pub struct FileReader {
 
 impl FileReader {
     fn new(path: JsString) -> Result<Self> {
-        let utf8_string = path.into_utf8()?;
-        let filepath = utf8_string.into_owned()?;
+        let filepath = get_str_from_js(path)?;
         Ok(Self { filepath })
     }
 }
@@ -38,7 +42,12 @@ impl Task for FileReader {
     type JsValue = JsBuffer;
 
     fn compute(&mut self) -> Result<Self::Output> {
-        read(&self.filepath).map_err(|err| Error::from_reason(err.to_string()))
+        read(&self.filepath).map_err(|err| {
+            Error::new(
+                Status::GenericFailure,
+                format!("failed to read file, {}", err),
+            )
+        })
     }
 
     fn resolve(self, env: Env, output: Self::Output) -> Result<Self::JsValue> {

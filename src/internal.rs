@@ -7,3 +7,8 @@ macro_rules! node_error {
         }
     };
 }
+
+#[inline]
+pub(crate) fn get_str_from_js(value: napi::JsString) -> napi::Result<String> {
+    value.into_utf8()?.into_owned()
+}
