@@ -1,10 +1,10 @@
-use super::{get_str_from_js, node_error};
+use super::{node_error, get_string};
 use napi::*;
 use std::fs::read;
 
 #[js_function(1)]
 pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
-    let filepath = get_str_from_js(ctx.get(0)?)?;
+    let filepath = get_string!(ctx.get::<JsString>(0)?)?;
     let file = read(filepath).map_err(|err| {
         Error::new(
             Status::GenericFailure,
@@ -32,7 +32,7 @@ pub struct FileReader {
 
 impl FileReader {
     fn new(path: JsString) -> Result<Self> {
-        let filepath = get_str_from_js(path)?;
+        let filepath = get_string!(path)?;
         Ok(Self { filepath })
     }
 }

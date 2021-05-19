@@ -1,10 +1,10 @@
-use super::{get_str_from_js, node_error};
+use super::{get_string, node_error};
 use napi::*;
 use std::fs::write;
 
 #[js_function(2)]
 pub fn write_file_sync(ctx: CallContext) -> Result<JsUndefined> {
-    let filepath = get_str_from_js(ctx.get(0)?)?;
+    let filepath = get_string!(ctx.get::<JsString>(0)?)?;
     let buffer = ctx.get::<JsBuffer>(1)?.into_value()?;
     let err = write(filepath, buffer).map_err(|err| err.to_string());
     node_error!(err);
@@ -29,7 +29,7 @@ pub struct FileWriter {
 
 impl FileWriter {
     fn new(path: JsString, raw: JsBuffer) -> Result<Self> {
-        let filepath = get_str_from_js(path)?;
+        let filepath = get_string!(path)?;
         let data = raw.into_value()?.to_vec();
         Ok(Self { filepath, data })
     }
