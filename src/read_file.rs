@@ -12,8 +12,7 @@ pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
         )
     });
     let bytes = node_error!(file);
-    let buffer = ctx.env.create_buffer_with_data(bytes)?.into_raw();
-    Ok(buffer)
+    Ok(ctx.env.create_buffer_with_data(bytes)?.into_raw())
 }
 
 #[js_function(1)]

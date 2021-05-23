@@ -1,0 +1,10 @@
+[package]
+authors = ["StarlitePyro <owenbellish@gmail.com>"]
+description = "Custom building for star-utils"
+edition = "2018"
+license = "MIT"
+name = "star-build"
+version = "0.1.0"
+
+[target.'cfg(not(target_env = "musl"))'.dependencies]
+ureq = "2"

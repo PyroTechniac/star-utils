@@ -13,8 +13,10 @@ napi-derive = "1"
 version = "1"
 features = ["napi8"]
 
+# [build-dependencies]
+# napi-build = "1"
 [build-dependencies]
-napi-build = "1"
+star-build = { path = "./build" }
 
 [profile.release]
 lto = true

@@ -1,5 +1,5 @@
-extern crate napi_build;
+extern crate star_build;
 
 fn main() {
-  napi_build::setup();
+	star_build::setup();
 }

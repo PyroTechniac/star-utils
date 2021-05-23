@@ -12,7 +12,8 @@
 		"@node-rs/helper": "^1.0.0"
 	},
 	"devDependencies": {
-		"benchmark": "^2.1.4"
+		"benchmark": "^2.1.4",
+		"benny": "^3.6.15"
 	},
 	"engines": {
 		"node": ">= 10"
