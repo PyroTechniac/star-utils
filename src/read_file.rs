@@ -26,7 +26,7 @@ pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
 
 #[js_function(1)]
 pub fn read_file(ctx: CallContext) -> Result<JsObject> {
-    let reader = FileReader::new(&ctx)?;
+    let reader = FileReader::from_context(&ctx)?;
     make_promise!(ctx, reader)
 }
 
@@ -36,7 +36,7 @@ pub struct FileReader {
 }
 
 impl ContextCreation for FileReader {
-    fn new(ctx: &CallContext) -> Result<Self> {
+    fn from_context(ctx: &CallContext) -> Result<Self> {
         let filepath = get_string!(ctx.get::<JsString>(0)?)?;
         Ok(Self { filepath })
     }

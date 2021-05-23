@@ -25,5 +25,5 @@ macro_rules! make_promise {
 }
 
 pub(crate) trait ContextCreation: napi::Task {
-    fn new(ctx: &napi::CallContext) -> napi::Result<Self>;
+    fn from_context(ctx: &napi::CallContext) -> napi::Result<Self>;
 }

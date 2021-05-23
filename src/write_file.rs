@@ -13,7 +13,7 @@ pub fn write_file_sync(ctx: CallContext) -> Result<JsUndefined> {
 
 #[js_function(2)]
 pub fn write_file(ctx: CallContext) -> Result<JsObject> {
-    let writer = FileWriter::new(&ctx)?;
+    let writer = FileWriter::from_context(&ctx)?;
     make_promise!(ctx, writer)
 }
 
@@ -24,7 +24,7 @@ pub struct FileWriter {
 }
 
 impl ContextCreation for FileWriter {
-    fn new(ctx: &CallContext) -> Result<Self> {
+    fn from_context(ctx: &CallContext) -> Result<Self> {
         let filepath = get_string!(ctx.get::<JsString>(0)?)?;
         let data = ctx.get::<JsBuffer>(1)?.into_value()?.to_vec();
         Ok(Self { filepath, data })
