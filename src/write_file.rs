@@ -8,7 +8,7 @@ pub fn write_file_sync(ctx: CallContext) -> Result<JsUndefined> {
     let buffer = ctx.get::<JsBuffer>(1)?.into_value()?;
     let err = write(filepath, buffer).map_err(|err| err.to_string());
     node_error!(err);
-    Ok(ctx.env.get_undefined()?)
+    ctx.env.get_undefined()
 }
 
 #[js_function(2)]
@@ -49,6 +49,6 @@ impl Task for FileWriter {
     }
 
     fn resolve(self, env: Env, _: Self::Output) -> Result<Self::JsValue> {
-        Ok(env.get_undefined()?)
+        env.get_undefined()
     }
 }
