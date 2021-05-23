@@ -1,4 +1,4 @@
-use super::{get_string, node_error};
+use super::{get_string, make_promise, node_error};
 use napi::*;
 use std::fs::write;
 
@@ -16,9 +16,7 @@ pub fn write_file(ctx: CallContext) -> Result<JsObject> {
     let input = ctx.get::<JsString>(0)?;
     let raw = ctx.get::<JsBuffer>(1)?;
     let writer = FileWriter::new(input, raw)?;
-    ctx.env
-        .spawn(writer)
-        .map(|async_task| async_task.promise_object())
+    make_promise!(ctx, writer)
 }
 
 #[derive(Debug)]
@@ -28,6 +26,7 @@ pub struct FileWriter {
 }
 
 impl FileWriter {
+    #[inline]
     fn new(path: JsString, raw: JsBuffer) -> Result<Self> {
         let filepath = get_string!(path)?;
         let data = raw.into_value()?.to_vec();

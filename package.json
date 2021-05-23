@@ -26,6 +26,7 @@
 		"version": "napi version",
 		"test": "node ./test/",
 		"install": "napi build --platform --release",
-		"bench": "node ./benchmark"
+		"bench": "node ./benchmark",
+		"clean": "node ./scripts/clean.mjs"
 	}
 }

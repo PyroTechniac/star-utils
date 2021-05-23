@@ -1,4 +1,4 @@
-use super::{node_error, get_string};
+use super::{node_error, get_string, make_promise};
 use napi::*;
 use std::fs::read;
 
@@ -19,9 +19,7 @@ pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
 pub fn read_file(ctx: CallContext) -> Result<JsObject> {
     let input = ctx.get::<JsString>(0)?;
     let reader = FileReader::new(input)?;
-    ctx.env
-        .spawn(reader)
-        .map(|async_task| async_task.promise_object())
+    make_promise!(ctx, reader)
 }
 
 #[derive(Debug)]
@@ -30,6 +28,7 @@ pub struct FileReader {
 }
 
 impl FileReader {
+    #[inline]
     fn new(path: JsString) -> Result<Self> {
         let filepath = get_string!(path)?;
         Ok(Self { filepath })

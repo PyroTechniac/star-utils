@@ -12,5 +12,14 @@ macro_rules! node_error {
 macro_rules! get_string {
     ($res:expr) => {
         $res.into_utf8()?.into_owned()
-    }
+    };
+}
+
+#[macro_export]
+macro_rules! make_promise {
+    ($ctx:expr, $task:expr) => {
+        $ctx.env
+            .spawn($task)
+            .map(|async_task| async_task.promise_object())
+    };
 }
