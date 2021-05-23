@@ -1,14 +1,9 @@
-const b = require('benny');
+const asyncSuite = require('./suites/async');
+const syncSuite = require('./suites/sync');
 
-b.suite(
-    'Example',
-    b.add('Reduce two elements', () => {
-        [1, 2].reduce((a, b) => a + b);
-    }),
-    b.add('Reduce five elements', () => {
-        [1, 2, 3, 4, 5].reduce((a, b) => a + b)
-    }),
-    b.cycle(),
-    b.complete(),
-    b.save({ file: 'reduce', version: '1.0.0' })
-);
+async function main() {
+    await asyncSuite();
+    await syncSuite();
+}
+
+main();
