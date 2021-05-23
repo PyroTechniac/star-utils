@@ -9,6 +9,8 @@ use self::{
 };
 use napi::*;
 
+pub(crate) use internal::ContextCreation;
+
 mod internal;
 mod read_file;
 mod write_file;

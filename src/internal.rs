@@ -23,3 +23,7 @@ macro_rules! make_promise {
             .map(|async_task| async_task.promise_object())
     };
 }
+
+pub(crate) trait ContextCreation: napi::Task {
+    fn new(ctx: &napi::CallContext) -> napi::Result<Self>;
+}

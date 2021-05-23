@@ -1,4 +1,4 @@
-use super::{get_string, make_promise, node_error};
+use super::{get_string, make_promise, node_error, ContextCreation};
 use napi::*;
 use std::fs::write;
 
@@ -13,9 +13,7 @@ pub fn write_file_sync(ctx: CallContext) -> Result<JsUndefined> {
 
 #[js_function(2)]
 pub fn write_file(ctx: CallContext) -> Result<JsObject> {
-    let input = ctx.get::<JsString>(0)?;
-    let raw = ctx.get::<JsBuffer>(1)?;
-    let writer = FileWriter::new(input, raw)?;
+    let writer = FileWriter::new(&ctx)?;
     make_promise!(ctx, writer)
 }
 
@@ -25,11 +23,10 @@ pub struct FileWriter {
     data: Vec<u8>,
 }
 
-impl FileWriter {
-    #[inline]
-    fn new(path: JsString, raw: JsBuffer) -> Result<Self> {
-        let filepath = get_string!(path)?;
-        let data = raw.into_value()?.to_vec();
+impl ContextCreation for FileWriter {
+    fn new(ctx: &CallContext) -> Result<Self> {
+        let filepath = get_string!(ctx.get::<JsString>(0)?)?;
+        let data = ctx.get::<JsBuffer>(1)?.into_value()?.to_vec();
         Ok(Self { filepath, data })
     }
 }

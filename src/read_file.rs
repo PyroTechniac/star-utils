@@ -1,6 +1,15 @@
-use super::{node_error, get_string, make_promise};
+use super::{get_string, make_promise, node_error, ContextCreation};
 use napi::*;
 use std::fs::read;
+
+macro_rules! create_buffer {
+    (ctx, $ctx:expr, $bytes:expr) => {
+        create_buffer!($ctx.env, $bytes)
+    };
+    ($env:expr, $bytes:expr) => {
+        Ok($env.create_buffer_with_data($bytes)?.into_raw())
+    };
+}
 
 #[js_function(1)]
 pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
@@ -12,13 +21,12 @@ pub fn read_file_sync(ctx: CallContext) -> Result<JsBuffer> {
         )
     });
     let bytes = node_error!(file);
-    Ok(ctx.env.create_buffer_with_data(bytes)?.into_raw())
+    create_buffer!(ctx, ctx, bytes)
 }
 
 #[js_function(1)]
 pub fn read_file(ctx: CallContext) -> Result<JsObject> {
-    let input = ctx.get::<JsString>(0)?;
-    let reader = FileReader::new(input)?;
+    let reader = FileReader::new(&ctx)?;
     make_promise!(ctx, reader)
 }
 
@@ -27,10 +35,9 @@ pub struct FileReader {
     filepath: String,
 }
 
-impl FileReader {
-    #[inline]
-    fn new(path: JsString) -> Result<Self> {
-        let filepath = get_string!(path)?;
+impl ContextCreation for FileReader {
+    fn new(ctx: &CallContext) -> Result<Self> {
+        let filepath = get_string!(ctx.get::<JsString>(0)?)?;
         Ok(Self { filepath })
     }
 }
@@ -49,6 +56,6 @@ impl Task for FileReader {
     }
 
     fn resolve(self, env: Env, output: Self::Output) -> Result<Self::JsValue> {
-        Ok(env.create_buffer_with_data(output)?.into_raw())
+        create_buffer!(env, output)
     }
 }
